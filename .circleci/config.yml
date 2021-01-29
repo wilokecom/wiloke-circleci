@@ -9,13 +9,6 @@ jobs:
     working_directory: ./var/www/html
     steps:
       - checkout
-      - run:
-          name: Installing Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.28.2/docker-compose-`uname -s`-`uname -m` >
-            ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
 workflows:
   build_test_deploy:
     jobs:
