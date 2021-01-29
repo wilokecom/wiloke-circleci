@@ -6,9 +6,11 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:202010-01
-    working_directory: ./var/www/html
     steps:
       - checkout
+      - run:
+          name: Docker Composer Up
+          command: docker-compose up
 workflows:
   build_test_deploy:
     jobs:
