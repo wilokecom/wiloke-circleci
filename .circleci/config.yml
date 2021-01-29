@@ -7,7 +7,7 @@ jobs:
       DB_USER: wordpress
       DB_PASSWORD: 123456
       DB_HOST: 127.0.0.1
-      WORKING_DIR: /var/www/html
+      WORKING_DIR: ~/var/www/html
       WP_ADMIN: /var/www/html
       WP_PASSWORD: /var/www/html
       WP_EMAIL: /var/www/html
