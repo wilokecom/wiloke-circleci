@@ -32,9 +32,9 @@ jobs:
           name: Checking folder
           command: ls -la ~/
       - persist_to_workspace:
-          root: ~/tmp
+          root: .
           paths:
-            - wordpress
+            - .
 #      - run:
 #          name: Downloading WordPress
 #          command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
