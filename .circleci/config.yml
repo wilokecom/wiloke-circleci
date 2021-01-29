@@ -4,6 +4,7 @@ jobs:
     docker:
 #      - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
+      - image: circleci/buildpack-deps:curl
 #        environment:
 #          MYSQL_DATABASE: $DB_NAME
 #          MYSQL_USER: $DB_USER
