@@ -16,9 +16,6 @@ jobs:
             ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - run:
-          name: Docker Composer Up
-          command: docker-compose up
 workflows:
   build_test_deploy:
     jobs:
