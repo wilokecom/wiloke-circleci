@@ -1,4 +1,7 @@
 version: 2.1
+references:
+  - workspace_root: &workspace_root
+      /tmp
 jobs:
   build:
     docker:
@@ -15,10 +18,10 @@ jobs:
           MYSQL_PASSWORD: 123456
           MYSQL_ROOT_PASSWORD: root
     working_directory: ./var/www/html
-    workspace_root: &workspace_root
-                      /tmp
     steps:
       - checkout
+      - persist_to_workspace:
+          root: *workspace_root
 workflows:
   build_test_deploy:
     jobs:
