@@ -1,27 +1,42 @@
 version: 2.1
-references:
-  - workspace_root: &workspace_root
-      /tmp
 jobs:
   build:
+    environtment:
+      WORKSPACE_ROOT: tmp/
+      DB_NAME: wordpress
+      DB_USER: wordpress
+      DB_PASSWORD: 123456
+      DB_HOST: 127.0.0.1
+      WORKING_DIR: /var/www/html
+      WP_ADMIN: /var/www/html
+      WP_PASSWORD: /var/www/html
+      WP_EMAIL: /var/www/html
+      WP_URL: http://localhost
     docker:
-      - image: wordpress:5.6-php7.4
+      - image: circleci/php:7.4-node-browsers
+      - image: circleci/mysql:5.7
         environment:
-          WORDPRESS_DB_HOST: db
-          WORDPRESS_DB_USER: wordpress
-          WORDPRESS_DB_PASSWORD: 123456
-          WORDPRESS_DB_NAME: wordpress
-      - image: mysql:5.7
-        environment:
-          MYSQL_DATABASE: wordpress
-          MYSQL_USER: wordpress
-          MYSQL_PASSWORD: 123456
+          MYSQL_DATABASE: ${DB_NAME}
+          MYSQL_USER: ${DB_USER}
+          MYSQL_PASSWORD: ${DB_PASSWORD}
           MYSQL_ROOT_PASSWORD: root
-    working_directory: ./var/www/html
+          MYSQL_TCP_PORT: 3306
+          MYSQL_UNIX_PORT: 3306
+    working_directory: ${WORKING_DIR}
     steps:
       - checkout
       - persist_to_workspace:
-          root: *workspace_root
+          root: ${WORKSPACE_ROOT}
+          paths:
+            - wordpress
+      - run:
+          name: Downloading WordPress
+          command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+            chmod +x wp-cli.phar \
+            ./wp-cli.phar core download \
+            ./wp-cli.phar config create --dbname=${DB_NAME} --dbuser=${DB_USER} --dbhost=${DB_HOST}
+            --dbpass=${DB_PASSWORD} --skip-check \
+            ./wp-cli.phar core install --admin_name=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --url=${WP_URL} --title=WordPress
 workflows:
   build_test_deploy:
     jobs:
