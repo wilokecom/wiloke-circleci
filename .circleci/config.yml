@@ -13,8 +13,8 @@ jobs:
       WP_EMAIL: /var/www/html
       WP_URL: http://localhost
     docker:
-#      - image: circleci/php:7.4-node-browsers
-      - image: circleci/mysql:5.7
+      - image: circleci/php:7.4-node-browsers
+#      - image: circleci/mysql:5.7
 #        environment:
 #          MYSQL_DATABASE: $DB_NAME
 #          MYSQL_USER: $DB_USER
@@ -24,22 +24,19 @@ jobs:
 #          MYSQL_UNIX_PORT: 3306
     working_directory: ~/wiloke-circleci
     steps:
-      - run:
-          name: Update System
-          command: apt-get update && apt-get install -y openssh-client git
       - checkout
       - persist_to_workspace:
           root: .
           paths:
             - wordpress
-      - run:
-          name: Downloading WordPress
-          command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-            chmod +x wp-cli.phar \
-            ./wp-cli.phar core download \
-            ./wp-cli.phar config create --dbname=${DB_NAME} --dbuser=${DB_USER} --dbhost=${DB_HOST}
-            --dbpass=${DB_PASSWORD} --skip-check \
-            ./wp-cli.phar core install --admin_name=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --url=${WP_URL} --title=WordPress
+#      - run:
+#          name: Downloading WordPress
+#          command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+#            chmod +x wp-cli.phar \
+#            ./wp-cli.phar core download \
+#            ./wp-cli.phar config create --dbname=${DB_NAME} --dbuser=${DB_USER} --dbhost=${DB_HOST}
+#            --dbpass=${DB_PASSWORD} --skip-check \
+#            ./wp-cli.phar core install --admin_name=${WP_ADMIN} --admin_password=${WP_PASSWORD} --admin_email=${WP_EMAIL} --url=${WP_URL} --title=WordPress
 workflows:
   build_test_deploy:
     jobs:
