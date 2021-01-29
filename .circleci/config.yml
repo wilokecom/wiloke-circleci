@@ -30,11 +30,8 @@ jobs:
           paths:
             - wordpress
       - run:
-          name: Test Working directory
-          command: ls -la ~/var/www/html
-      - run:
          name: Test Workspace
-         command: ls -la ~/wordpress
+         command: ls -la ~/
       - run:
           name: Downloading WordPress
           command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
