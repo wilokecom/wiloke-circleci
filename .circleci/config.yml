@@ -28,6 +28,9 @@ jobs:
       - run:
           name: Creating workspace
           command: mkdir ~/tmp
+      - run:
+          name: Checking folder
+          command: ls -la ~/
       - persist_to_workspace:
           root: ~/tmp
           paths:
