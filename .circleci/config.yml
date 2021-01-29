@@ -35,6 +35,9 @@ jobs:
           root: .
           paths:
             - .
+      - persist_to_workspace:
+          root: tmp
+          paths:
             - wordpress
       - run:
           name: Checking persist_to_workspace workspace
