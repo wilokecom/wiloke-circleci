@@ -16,9 +16,9 @@ jobs:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_DATABASE: ${DB_NAME}
-          MYSQL_USER: ${DB_USER}
-          MYSQL_PASSWORD: ${DB_PASSWORD}
+          MYSQL_DATABASE: $DB_NAME
+          MYSQL_USER: $DB_USER
+          MYSQL_PASSWORD: $DB_PASSWORD
           MYSQL_ROOT_PASSWORD: root
           MYSQL_TCP_PORT: 3306
           MYSQL_UNIX_PORT: 3306
@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - persist_to_workspace:
-          root: ${WORKSPACE_ROOT}
+          root: $WORKSPACE_ROOT
           paths:
             - wordpress
       - run:
