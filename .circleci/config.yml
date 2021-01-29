@@ -8,7 +8,7 @@ jobs:
           WORDPRESS_DB_USER: wordpress
           WORDPRESS_DB_PASSWORD: 123456
           WORDPRESS_DB_NAME: wordpress
-      - db: mysql:5.7
+      - image: mysql:5.7
         environment:
           MYSQL_DATABASE: wordpress
           MYSQL_USER: wordpress
