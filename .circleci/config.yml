@@ -1,16 +1,27 @@
 version: 2.1
 references:
   - workspace_root: &workspace_root
-                      /tmp
+      /tmp
 jobs:
   build:
-    machine:
-      image: ubuntu-2004:202010-01
+    docker:
+      - image: wordpress:5.6-php7.4
+        environment:
+          WORDPRESS_DB_HOST: db
+          WORDPRESS_DB_USER: wordpress
+          WORDPRESS_DB_PASSWORD: 123456
+          WORDPRESS_DB_NAME: wordpress
+      - image: mysql:5.7
+        environment:
+          MYSQL_DATABASE: wordpress
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: 123456
+          MYSQL_ROOT_PASSWORD: root
+    working_directory: ./var/www/html
     steps:
       - checkout
-      - run:
-          name: Docker Composer Up
-          command: docker-compose up
+      - persist_to_workspace:
+          root: *workspace_root
 workflows:
   build_test_deploy:
     jobs:
