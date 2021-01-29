@@ -27,7 +27,7 @@ jobs:
       - checkout
       - run:
           name: Creating workspace
-          command: mkdir ~/tmp & chmod w+r ~/tmp
+          command: mkdir ~/tmp & chmod 777 ~/tmp
       - persist_to_workspace:
           root: ~/tmp
           paths:
