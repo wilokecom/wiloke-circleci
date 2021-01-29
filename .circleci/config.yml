@@ -26,9 +26,12 @@ jobs:
     steps:
       - checkout
       - persist_to_workspace:
-          root: $WORKSPACE_ROOT
+          root: .
           paths:
             - wordpress
+      - run:
+          name: Test Workspace
+          command: ls -la ~/var/www/html
       - run:
           name: Downloading WordPress
           command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
