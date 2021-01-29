@@ -17,6 +17,8 @@ jobs:
     working_directory: ./var/www/html
     workspace_root: &workspace_root
                       /tmp
+    steps:
+      - checkout
 workflows:
   build_test_deploy:
     jobs:
