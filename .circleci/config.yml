@@ -25,8 +25,11 @@ jobs:
     working_directory: ~/wiloke-circleci
     steps:
       - checkout
+      - run:
+          name: Creating workspace
+          command: mkdir ~/tmp & chmod w+r ~/tmp
       - persist_to_workspace:
-          root: ~/
+          root: ~/tmp
           paths:
             - wordpress
 #      - run:
