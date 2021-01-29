@@ -37,9 +37,6 @@ jobs:
           paths:
             - .
       - run:
-          name: Installing curl
-          command: apk update && apk add curl curl-dev
-      - run:
           name: Downloading WordPress
           command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
             chmod +x wp-cli.phar \
