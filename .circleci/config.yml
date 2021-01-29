@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   build:
-    environtment:
+    environment:
       WORKSPACE_ROOT: tmp/
       DB_NAME: wordpress
       DB_USER: wordpress
