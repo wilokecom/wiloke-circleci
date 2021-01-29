@@ -31,7 +31,7 @@ jobs:
             - wordpress
       - run:
           name: Test Working directory
-          command: ls -la /var/www/html
+          command: ls -la ~/var/www/html
       - run:
          name: Test Workspace
          command: ls -la ~/wordpress
