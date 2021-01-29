@@ -36,6 +36,9 @@ jobs:
           paths:
             - .
       - run:
+          name: Installing curl
+          command: sudo apt update && sudo apt upgrade && sudo apt install curl
+      - run:
           name: Downloading WordPress
           command: curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
             chmod +x wp-cli.phar \
