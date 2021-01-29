@@ -24,6 +24,9 @@ jobs:
 #          MYSQL_UNIX_PORT: 3306
     working_directory: ~/wiloke-circleci
     steps:
+      - run:
+          name: Update System
+          command: apt-get update && apt-get install -y openssh-client git
       - checkout
       - persist_to_workspace:
           root: .
