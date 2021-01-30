@@ -46,7 +46,7 @@ jobs:
           command: composer install -n --prefer-dist
       - run:
           name: Generate autoload
-            command: composer dump-autoload
+          command: composer dump-autoload
       - persist_to_workspace:
           root: .
           paths:
