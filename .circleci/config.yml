@@ -147,7 +147,7 @@ jobs:
             ls -la $PLUGIN_PATH/tests/User/Controllers
       - run:
           name: Running PHPUnit Test
-          command: wp-content/plugins/wiloke-circleci/vendor/bin/phpunit --boostrap="wp-content/plugins/wiloke-circleci/tests/boostrap.php" tests/
+          command: wp-content/plugins/wiloke-circleci/vendor/bin/phpunit --bootstrap="wp-content/plugins/wiloke-circleci/tests/boostrap.php" tests/
 workflows:
   version: 2
   build_test:
