@@ -134,6 +134,10 @@ jobs:
           command: sudo php -S $PHP_ADDRESS -t .
           background: true
       - run:
+          name: Test folder
+          command: |
+            ls -la $PLUGIN_PATH/$PLUGIN_NAME && ls -la $PLUGIN_PATH/$PLUGIN_NAME/tests
+      - run:
           name: Running PHPUnit Test
           command: |
             $PLUGIN_PATH/vendor/bin/phpunit
