@@ -116,9 +116,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-#      - run:
-#          name: Install MySQL PHP extension
-#          command: sudo docker-php-ext-install mysqli
+      - run:
+          name: Install MySQL PHP extension
+          command: sudo docker-php-ext-install mysqli
       - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
