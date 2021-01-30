@@ -28,7 +28,7 @@ references:
       WP_ADMIN: admin
       WP_PASSWORD: admin
       WP_EMAIL: contact.wiloke@gmail.com
-      WP_URL: http://localhost
+      WP_URL: http://localhost:8080
       REST_BASE: wiloke/v1
       PLUGIN_NAME: wiloke-circleci
       TEST_NAMESPACE: WilokeCircleciTest
@@ -113,7 +113,7 @@ jobs:
 #          command: sudo docker-php-ext-install mysqli
       - run:
           name: Start PHP server
-          command: sudo php -S ${WP_URL}:80 -t .
+          command: sudo php -S $WP_URL -t .
       - run:
           name: Running PHPUnit Test
           command: |
