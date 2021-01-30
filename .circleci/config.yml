@@ -154,6 +154,10 @@ jobs:
           command: |
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
+          name: Adding 777 to bootstrap
+          command: |
+            chmod 777 $PLUGIN_PATH/tests/phpunit.xml
+      - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && ./vendor/bin/phpunit --configuration=$PLUGIN_PATH/phpunit.xml
 workflows:
