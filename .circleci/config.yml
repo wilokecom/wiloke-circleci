@@ -148,7 +148,7 @@ jobs:
       - run:
           name: Cat phpunit
           command: |
-            ls -la $PLUGIN_PATH/vendor/bin/phpunit
+            cat $PLUGIN_PATH/vendor/bin/phpunit
       - run:
           name: Adding 777 to bootstrap
           command: |
