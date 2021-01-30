@@ -89,7 +89,7 @@ jobs:
       - attach_workspace:
           at: .
       - checkout:
-        path: wp-content/plugins
+          path: wp-content/plugins
 workflows:
   version: 2
   build_test:
