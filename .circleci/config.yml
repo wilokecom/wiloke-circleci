@@ -76,6 +76,8 @@ jobs:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
   test:
+    docker:
+      - image: circleci/mysql:5.7
     working_directory: ~/wiloke-circleci
     steps:
       - run:
