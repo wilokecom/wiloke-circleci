@@ -92,7 +92,10 @@ jobs:
           name: Install MySQL PHP extension
           command: ls -la wp-content
       - checkout:
-          path: wp-content/plugins/wiloke-circleci
+          path: wp-content/plugins/$PLUGIN_NAME
+      - run:
+          name: Activating the plugin
+          command: ./wp-cli.phar plugin activate $PLUGIN_NAME
 workflows:
   version: 2
   build_test:
