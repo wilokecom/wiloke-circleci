@@ -1,2 +1,6 @@
 vendor/
 phpunit.xml
+tests/bootstrap.php
+tests/CommonController.php
+tests/HTTP.php
+tests/cookies.txt
