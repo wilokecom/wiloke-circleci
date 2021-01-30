@@ -122,6 +122,7 @@ jobs:
       - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
+          background: true
       - run:
           name: Running PHPUnit Test
           command: |
