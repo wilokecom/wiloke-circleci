@@ -71,6 +71,7 @@ jobs:
   test_phpunit:
     <<: *docker_container
     <<: *working_directory
+    <<: *environment
     steps:
       - attach_workspace:
           at: .
