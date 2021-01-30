@@ -36,7 +36,6 @@ jobs:
     <<: *docker_container
     <<: *working_directory
     steps:
-      - checkout
       - run:
           name: Update Composer
           command: sudo composer self-update
