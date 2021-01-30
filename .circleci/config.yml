@@ -155,7 +155,7 @@ jobs:
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
           name: Running PHPUnit Test
-          command: $PLUGIN_PATH/vendor/bin/phpunit $PLUGIN_PATH/tests --bootstrap="./tests/bootstrap.php" --stop-on-warning --stop-on-failure --stop-on-error --colors=always
+          command: $PLUGIN_PATH/vendor/bin/phpunit $PLUGIN_PATH/tests --bootstrap=$PLUGIN_PATH/tests/bootstrap.php --stop-on-warning --stop-on-failure --stop-on-error --colors=always
 workflows:
   version: 2
   build_test:
