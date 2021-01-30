@@ -82,9 +82,9 @@ jobs:
     steps:
       - run:
           name: Before attaching workspace
-          command: ls -la
+          command: ls -la && mkdir z
       - attach_workspace:
-          at: .
+          at: z
       - run:
           name: After attaching workspace
           command: ls -la vendor
