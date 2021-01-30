@@ -33,6 +33,8 @@ references:
       PLUGIN_NAME: wiloke-circleci
       TEST_NAMESPACE: WilokeCircleciTest
       NAMESPACE: WilokeCircleci
+      PLUGIN_PATH: wp-content/plugins/wiloke-circleci
+      PLUGINS_FOLDER_PATH: wp-content/plugins
 jobs:
   build:
     <<: *environment
@@ -70,15 +72,15 @@ jobs:
           command: .circleci/install-wp-cli.sh
       - run:
           name: WordPress Dir
-          command: ls -la wp-content/plugins
+          command: ls -la $PLUGINS_FOLDER_PATH
       - checkout:
-          path: wp-content/plugins/$PLUGIN_NAME
+          path: $PLUGIN_PATH
       - run:
           name: WordPress Dir
-          command: ls -la wp-content/plugins
+          command: ls -la $PLUGINS_FOLDER_PATH
       - run:
           name: Activating the plugin
-          command: ./wp-cli.phar plugin activate ${PLUGIN_NAME}
+          command: echo $PLUGIN_NAME && ./wp-cli.phar plugin activate $PLUGIN_NAME
       - run:
           name: Update Composer
           command: sudo composer self-update
@@ -89,13 +91,16 @@ jobs:
             - composer-v1-
       - run:
           name: Installing Composer
-          command: cd wp-content/plugins/$PLUGIN_NAME && composer install -n --prefer-dist
+          command: cd $PLUGIN_PATH && composer install -n --prefer-dist
       - run:
           name: Generate autoload
-          command: cd wp-content/plugins/$PLUGIN_NAME && composer dump-autoload
+          command: cd $PLUGIN_PATH && composer dump-autoload
       - run:
-          name: Installing Wiloke CLI
-          command: .circleci/wp-active-plugin.sh
+          name: Activating plugin
+          command: .circleci/wp-plugin-activation.sh
+      - run:
+          name: Setting up PHP UNIT
+          command: .circleci/wp-setup-phpunit.sh
       - persist_to_workspace:
           root: .
           paths: .
@@ -109,7 +114,7 @@ jobs:
       - run:
           name: Running PHPUnit Test
           command: |
-            cd wp-content/plugins/$PLUGIN_NAME && ./vendor/bin/phpunit
+            cd $PLUGIN_PATH && ./vendor/bin/phpunit
 workflows:
   version: 2
   build_test:
