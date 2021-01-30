@@ -49,17 +49,16 @@ jobs:
           command: composer dump-autoload
       - persist_to_workspace:
           root: .
-          paths:
-            - plugin
+          paths: .
       - run:
           name: Checking folder
           command: ls -la
       - run:
+          name: Checking TMP
+          command: ls -la ~/tmp
+      - run:
           name: Creating workspace
           command: mkdir ~/tmp
-      - run:
-          name: Checking folder
-          command: ls -la ~/
       - run:
           name: Installing Mysql
           command: |
