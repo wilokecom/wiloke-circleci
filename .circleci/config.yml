@@ -92,7 +92,7 @@ jobs:
           name: Install MySQL PHP extension
           command: ls -la wp-content
       - checkout:
-          path: wp-content/plugins
+          path: wp-content/plugins/wiloke-circleci
 workflows:
   version: 2
   build_test:
