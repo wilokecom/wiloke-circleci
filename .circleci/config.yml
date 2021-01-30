@@ -91,4 +91,5 @@ test:
 workflows:
   build_test_deploy:
     jobs:
-      - build
+      - test:
+          requires: build
