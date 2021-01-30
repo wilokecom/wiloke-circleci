@@ -108,9 +108,12 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+#      - run:
+#          name: Install MySQL PHP extension
+#          command: sudo docker-php-ext-install mysqli
       - run:
           name: Start PHP server
-          command: sudo php -S $WP_URL -t .
+          command: sudo php -S ${WP_URL}:80 -t .
       - run:
           name: Running PHPUnit Test
           command: |
