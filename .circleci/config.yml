@@ -147,7 +147,7 @@ jobs:
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
           name: Running PHPUnit Test
-          command: cd $PLUGIN_PATH && vendor/bin/phpunit tests/
+          command: cd $PLUGIN_PATH && vendor/bin/phpunit tests/User/Controllers/PostControllerTest.php
 workflows:
   version: 2
   build_test:
