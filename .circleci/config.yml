@@ -33,6 +33,9 @@ jobs:
       - run:
           name: Update Composer
           command: sudo composer self-update
+      - run:
+          name: Update Composer
+          command: sudo composer self-update
       - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
           keys:
             - composer-v1-{{ checksum "composer.lock" }}
