@@ -138,9 +138,9 @@ jobs:
           command: |
             ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
       - run:
-        name: PHPUnit
-        command: |
-          cat $PLUGIN_PATH/phpunit.xml
+          name: PHPUnit
+          command: |
+            cat $PLUGIN_PATH/phpunit.xml
       - run:
           name: Running PHPUnit Test
           command: |
