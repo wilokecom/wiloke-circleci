@@ -37,23 +37,6 @@ jobs:
     <<: *working_directory
     steps:
       - run:
-          name: Update Composer
-          command: sudo composer self-update
-      - run:
-          name: Update Composer
-          command: sudo composer self-update
-      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
-          keys:
-            - composer-v1-{{ checksum "composer.lock" }}
-            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
-            - composer-v1-
-      - run:
-          name: Installing Composer
-          command: composer install -n --prefer-dist
-      - run:
-          name: Generate autoload
-          command: composer dump-autoload
-      - run:
           name: Checking folder
           command: ls -la
       - run:
@@ -95,6 +78,20 @@ jobs:
       - run:
           name: Activating the plugin
           command: ./wp-cli.phar plugin activate $PLUGIN_NAME
+      - run:
+          name: Update Composer
+          command: sudo composer self-update
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - composer-v1-
+      - run:
+          name: Installing Composer
+          command: cd wp-content/plugins/$PLUGIN_NAME && composer install -n --prefer-dist
+      - run:
+          name: Generate autoload
+          command: cd wp-content/plugins/$PLUGIN_NAME && composer dump-autoload
 workflows:
   version: 2
   build_test:
