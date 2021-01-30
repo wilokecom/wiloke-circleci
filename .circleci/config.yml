@@ -32,9 +32,9 @@ references:
       PLUGIN_NAME: wiloke-circleci
 jobs:
   build:
-    &environment
-    &docker_container
-    &working_directory
+    *environment
+    *docker_container
+    *working_directory
     steps:
       - checkout
       - run:
@@ -83,8 +83,8 @@ jobs:
           root: .
           paths: .
   test_phpunit:
-    &docker_container
-    &working_directory
+    *docker_container
+    *working_directory
     steps:
       - attach_workspace:
           at: .
