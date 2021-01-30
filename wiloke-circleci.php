@@ -7,5 +7,3 @@
  * Description: Integrating Circle Ci to WP
  * Author: 1.0
  */
-
-echo "Hello";
