@@ -71,6 +71,16 @@ jobs:
           name: Create Database
           command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
       - run:
+          name: Install MySQL client
+          command: |
+            sudo apt-get update && \
+            sudo apt-get -y install \
+              default-mysql-client \
+              libjpeg-dev \
+              libpng-dev \
+              libzip-dev \
+              libcurl4-gnutls-dev
+      - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
       - run:
@@ -116,9 +126,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install MySQL PHP extension
-          command: sudo docker-php-ext-install mysqli
+#      - run:
+#          name: Install MySQL PHP extension
+#          command: sudo docker-php-ext-install mysqli
       - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
@@ -126,7 +136,7 @@ jobs:
       - run:
           name: Running PHPUnit Test
           command: |
-            cd $PLUGIN_PATH && ./vendor/bin/phpunit
+            $PLUGIN_PATH/vendor/bin/phpunit
 workflows:
   version: 2
   build_test:
