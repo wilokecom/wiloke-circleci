@@ -109,6 +109,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Start PHP server
+          command: sudo php -S $WP_URL -t .
+      - run:
           name: Running PHPUnit Test
           command: |
             cd $PLUGIN_PATH && ./vendor/bin/phpunit
