@@ -10,7 +10,7 @@ jobs:
       WORKING_DIR: ~/var/www/html
       WP_ADMIN: /var/www/html
       WP_PASSWORD: /var/www/html
-      WP_EMAIL: /var/www/html
+      WP_EMAIL: contact.wiloke@gmail.com
       WP_URL: http://localhost
     docker:
       - image: circleci/php:7.4-node-browsers
