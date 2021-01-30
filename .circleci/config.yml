@@ -54,9 +54,6 @@ jobs:
           name: Checking folder
           command: ls -la
       - run:
-          name: Checking TMP
-          command: ls -la ~/
-      - run:
           name: Installing Mysql
           command: |
             for i in `seq 1 10`;
@@ -78,6 +75,19 @@ jobs:
       - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
+test:
+  docker:
+    - image: circleci/php:7.4-node-browsers
+  working_directory: ~/wiloke-circleci
+  steps:
+    - run:
+        name: Before attaching workspace
+        command: ls -la
+    - attach_workspace:
+        at: .
+    - run:
+        name: After attaching workspace
+        command: ls -la
 workflows:
   build_test_deploy:
     jobs:
