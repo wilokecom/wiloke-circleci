@@ -126,9 +126,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-#      - run:
-#          name: Install MySQL PHP extension
-#          command: sudo docker-php-ext-install mysqli
+     - run:
+         name: Install MySQL PHP extension
+         command: sudo docker-php-ext-install mysqli
       - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
@@ -142,9 +142,9 @@ jobs:
           command: |
             cat $PLUGIN_PATH/phpunit.xml
       - run:
-          name: Cat PHPUnit
+          name: Adding 777 to bootstrap
           command: |
-            ls -la $PLUGIN_PATH/tests/
+            chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && vendor/bin/phpunit --bootstrap=./tests/bootstrap.php tests/
