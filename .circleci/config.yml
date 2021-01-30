@@ -90,7 +90,7 @@ jobs:
           at: .
       - run:
           name: Install MySQL PHP extension
-          command: ls -la wp-content
+          command: ls -la wp-content/plugins
       - checkout:
           path: wp-content/plugins/$PLUGIN_NAME
 #      - run:
