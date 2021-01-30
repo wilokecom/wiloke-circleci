@@ -55,10 +55,7 @@ jobs:
           command: ls -la
       - run:
           name: Checking TMP
-          command: ls -la ~/tmp
-      - run:
-          name: Creating workspace
-          command: mkdir ~/
+          command: ls -la ~/
       - run:
           name: Installing Mysql
           command: |
