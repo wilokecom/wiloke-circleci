@@ -25,11 +25,14 @@ references:
       DB_PASSWORD: 123456
       DB_HOST: 127.0.0.1
       WORKING_DIR: ~/var/www/html
-      WP_ADMIN: /var/www/html
-      WP_PASSWORD: /var/www/html
+      WP_ADMIN: admin
+      WP_PASSWORD: admin
       WP_EMAIL: contact.wiloke@gmail.com
       WP_URL: http://localhost
+      REST_BASE: wiloke/v1
       PLUGIN_NAME: wiloke-circleci
+      TEST_NAMESPACE: WilokeCircleciTest
+      NAMESPACE: WilokeCircleci
 jobs:
   build:
     <<: *environment
@@ -65,16 +68,6 @@ jobs:
       - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
-      - persist_to_workspace:
-          root: .
-          paths: .
-  test_phpunit:
-    <<: *docker_container
-    <<: *working_directory
-    <<: *environment
-    steps:
-      - attach_workspace:
-          at: .
       - run:
           name: WordPress Dir
           command: ls -la wp-content/plugins
@@ -82,7 +75,7 @@ jobs:
           path: wp-content/plugins/$PLUGIN_NAME
       - run:
           name: Activating the plugin
-          command: ./wp-cli.phar plugin activate ${PLUGIN_NAME}
+          command: ./wp-cli.phar plugin activate $PLUGIN_NAME
       - run:
           name: Update Composer
           command: sudo composer self-update
@@ -93,13 +86,25 @@ jobs:
             - composer-v1-
       - run:
           name: Installing Composer
-          command: cd wp-content/plugins/${PLUGIN_NAME} && composer install -n --prefer-dist
+          command: cd wp-content/plugins/$PLUGIN_NAME && composer install -n --prefer-dist
       - run:
           name: Generate autoload
-          command: cd wp-content/plugins/${PLUGIN_NAME} && composer dump-autoload
+          command: cd wp-content/plugins/$PLUGIN_NAME && composer dump-autoload
+      - run:
+          name: Installing Wiloke CLI
+          command: |
+            ./vendor/bin/wilokecli make:unittest plugins $PLUGIN_NAME --homeurl=$WP_URL --rb=$REST_BASE
+            --namespace=$TEST_NAMESPACE --admin_username=$WP_ADMIN --admin_password=$WP_ADMIN
       - persist_to_workspace:
           root: .
           paths: .
+  test_phpunit:
+    <<: *docker_container
+    <<: *working_directory
+    <<: *environment
+    steps:
+      - attach_workspace:
+          at: .
 workflows:
   version: 2
   build_test:

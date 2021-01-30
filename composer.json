@@ -3,5 +3,14 @@
     "psr-4": {
       "WilokeCircleci\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WilokeCircleciTest\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.5.20",
+    "wilokecom/phpcli": "*"
   }
 }
