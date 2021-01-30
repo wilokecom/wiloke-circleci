@@ -48,8 +48,8 @@ jobs:
           name: Generate autoload
           command: composer dump-autoload
       - persist_to_workspace:
-          root: root/wiloke-circleci
-          paths: build
+          root: .
+          paths: vendor
       - run:
           name: Checking folder
           command: ls -la
