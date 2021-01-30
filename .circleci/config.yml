@@ -5,13 +5,16 @@ jobs:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
       - image: circleci/buildpack-deps:curl
-#        environment:
-#          MYSQL_DATABASE: $DB_NAME
-#          MYSQL_USER: $DB_USER
-#          MYSQL_PASSWORD: $DB_PASSWORD
-#          MYSQL_ROOT_PASSWORD: root
-#          MYSQL_TCP_PORT: 3306
-#          MYSQL_UNIX_PORT: 3306
+        environment:
+          MYSQL_DATABASE: $DB_NAME
+          MYSQL_USER: $DB_USER
+          MYSQL_PASSWORD: $DB_PASSWORD
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_TCP_PORT: 3306
+          MYSQL_UNIX_PORT: 3306
+        auth:
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PASSWORD  # context / project UI env-var reference
     environment:
       WORKSPACE_ROOT: tmp/
       DB_NAME: wordpress
@@ -36,6 +39,19 @@ jobs:
           root: .
           paths:
             - .
+      - run:
+          name: Installing Mysql
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Install MySQL CLI; #https://circleci.com/docs/2.0/postgres-config/
+          command: sudo apt-get install default-mysql-client
       - run:
           name: Downloading WordPress
           command: .circleci/install-wp-cli.sh
