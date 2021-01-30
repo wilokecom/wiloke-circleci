@@ -13,7 +13,5 @@ class PostControllerTest extends CommonController
 		foreach ($aResponse as $aPost) {
 			$this->assertArrayHasKey('title', $aPost);
 		}
-
-		$this->assertFalse(true);
 	}
 }
