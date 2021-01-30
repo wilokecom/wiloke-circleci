@@ -147,7 +147,7 @@ jobs:
             ls -la $PLUGIN_PATH/tests/
       - run:
           name: Running PHPUnit Test
-          command: cd $PLUGIN_PATH && vendor/bin/phpunit --bootstrap=$CIRCLE_WORKING_DIRECTORY/$PLUGIN_PATH/tests/boostrap.php tests/
+          command: cd $PLUGIN_PATH && vendor/bin/phpunit --bootstrap=$CIRCLE_WORKING_DIRECTORY/$PLUGIN_PATH/tests/bootstrap.php tests/
 workflows:
   version: 2
   build_test:
