@@ -79,8 +79,6 @@ jobs:
       - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
-      - checkout
-        path: ./wp-content/plugins
 workflows:
   build_test_deploy:
     jobs:
