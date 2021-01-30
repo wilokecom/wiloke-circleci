@@ -136,7 +136,7 @@ jobs:
       - run:
           name: Test folder
           command: |
-            ls -la $PLUGIN_PATH/$PLUGIN_NAME && ls -la $PLUGIN_PATH/$PLUGIN_NAME/tests
+            ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
       - run:
           name: Running PHPUnit Test
           command: |
