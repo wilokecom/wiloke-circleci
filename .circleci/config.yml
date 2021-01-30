@@ -93,10 +93,13 @@ jobs:
             - composer-v1-
       - run:
           name: Installing Composer
-          command: cd wp-content/plugins/$PLUGIN_NAME && composer install -n --prefer-dist
+          command: cd wp-content/plugins/${PLUGIN_NAME} && composer install -n --prefer-dist
       - run:
           name: Generate autoload
-          command: cd wp-content/plugins/$PLUGIN_NAME && composer dump-autoload
+          command: cd wp-content/plugins/${PLUGIN_NAME} && composer dump-autoload
+      - persist_to_workspace:
+          root: .
+          paths: .
 workflows:
   version: 2
   build_test:
