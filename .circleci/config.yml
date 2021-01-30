@@ -75,19 +75,19 @@ jobs:
       - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
-test:
-  docker:
-    - image: circleci/php:7.4-node-browsers
-  working_directory: ~/wiloke-circleci
-  steps:
-    - run:
-        name: Before attaching workspace
-        command: ls -la
-    - attach_workspace:
-        at: .
-    - run:
-        name: After attaching workspace
-        command: ls -la
+  test:
+    docker:
+      - image: circleci/php:7.4-node-browsers
+    working_directory: ~/wiloke-circleci
+    steps:
+      - run:
+          name: Before attaching workspace
+          command: ls -la
+      - attach_workspace:
+          at: .
+      - run:
+          name: After attaching workspace
+          command: ls -la
 workflows:
   version: 2
   build_test:
