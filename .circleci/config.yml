@@ -54,7 +54,7 @@ jobs:
           command: sudo apt-get install default-mysql-client
       - run:
           name: Create Database
-          command: mysql -h ${DB_HOST} -u root -proot -e "create database wordpress;"
+          command: mysql -h $DB_HOST -u root -proot -e "create database wordpress;"
       - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
