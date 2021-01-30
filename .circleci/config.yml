@@ -58,7 +58,7 @@ jobs:
           command: ls -la ~/tmp
       - run:
           name: Creating workspace
-          command: mkdir ~/tmp
+          command: mkdir ~/
       - run:
           name: Installing Mysql
           command: |
