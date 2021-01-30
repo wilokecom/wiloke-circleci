@@ -88,6 +88,9 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - run:
+          name: Install MySQL PHP extension
+          command: ls -la
       - checkout:
           path: wp-content/plugins
 workflows:
