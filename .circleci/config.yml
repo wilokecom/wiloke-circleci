@@ -142,6 +142,14 @@ jobs:
           command: |
             cat $PLUGIN_PATH/phpunit.xml
       - run:
+          name: Bin
+          command: |
+            ls -la $PLUGIN_PATH/vendor/bin
+      - run:
+          name: Cat phpunit
+          command: |
+            ls -la $PLUGIN_PATH/vendor/bin/phpunit
+      - run:
           name: Adding 777 to bootstrap
           command: |
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
