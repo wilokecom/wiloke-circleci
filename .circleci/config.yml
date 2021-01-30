@@ -95,9 +95,7 @@ jobs:
           command: cd wp-content/plugins/$PLUGIN_NAME && composer dump-autoload
       - run:
           name: Installing Wiloke CLI
-          command: |
-            ./vendor/bin/wilokecli make:unittest plugins $PLUGIN_NAME --homeurl=$WP_URL --rb=$REST_BASE
-            --namespace=$TEST_NAMESPACE --admin_username=$WP_ADMIN --admin_password=$WP_ADMIN
+          command: .circleci/wp-active-plugin.sh
       - persist_to_workspace:
           root: .
           paths: .
@@ -108,6 +106,10 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - run:
+          name: Running PHPUnit Test
+          command: |
+            cd wp-content/plugins/$PLUGIN_NAME && ./vendor/bin/phpunit
 workflows:
   version: 2
   build_test:
