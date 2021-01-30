@@ -74,8 +74,11 @@ jobs:
       - checkout:
           path: wp-content/plugins/$PLUGIN_NAME
       - run:
+          name: WordPress Dir
+          command: ls -la wp-content/plugins
+      - run:
           name: Activating the plugin
-          command: ./wp-cli.phar plugin activate $PLUGIN_NAME
+          command: ./wp-cli.phar plugin activate ${PLUGIN_NAME}
       - run:
           name: Update Composer
           command: sudo composer self-update
