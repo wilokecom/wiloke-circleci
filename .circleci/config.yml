@@ -143,8 +143,7 @@ jobs:
             cat $PLUGIN_PATH/phpunit.xml
       - run:
           name: Running PHPUnit Test
-          command: |
-            wp-content/plugins/wiloke-circleci/vendor/bin/phpunit
+          command: wp-content/plugins/wiloke-circleci/vendor/bin/phpunit tests/
 workflows:
   version: 2
   build_test:
