@@ -46,11 +46,11 @@ jobs:
           name: Checking folder
           command: ls -la
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Docker Build
-          command: docker build .
+#      - setup_remote_docker:
+#          docker_layer_caching: true
+#      - run:
+#          name: Docker Build
+#          command: docker build .
       - run:
           name: Checking folder
           command: ls -la
@@ -108,9 +108,9 @@ jobs:
           root: .
           paths: .
   test_phpunit:
-    machine:
-      docker_layer_caching: true
-#    <<: *docker_container
+#    machine:
+#      docker_layer_caching: true
+    <<: *docker_container
     <<: *working_directory
     <<: *environment
     steps:
