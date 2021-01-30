@@ -12,6 +12,7 @@ jobs:
       WP_PASSWORD: /var/www/html
       WP_EMAIL: contact.wiloke@gmail.com
       WP_URL: http://localhost
+      PLUGIN_NAME: wiloke-circleci
     docker:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
@@ -30,15 +31,32 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update Composer
+          command: sudo composer self-update
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+        keys:
+        - composer-v1-{{ checksum "composer.lock" }}
+        # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+        - composer-v1-
+        - run:
+            name: Installing Composer
+            command: composer install -n --prefer-dist
+        - run:
+            name: Generate autoload
+            command: composer dump-autoload
+      - persist_to_workspace:
+          root: .
+          paths:
+            - plugin
+      - run:
+          name: Checking folder
+          command: ls -la
+      - run:
           name: Creating workspace
           command: mkdir ~/tmp
       - run:
           name: Checking folder
           command: ls -la ~/
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
       - run:
           name: Installing Mysql
           command: |
@@ -59,8 +77,10 @@ jobs:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
       - run:
-          name: Downloading WordPress
+          name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
+      - checkout
+        path: ./wp-content/plugins
 workflows:
   build_test_deploy:
     jobs:
