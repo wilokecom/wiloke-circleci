@@ -154,10 +154,6 @@ jobs:
           command: |
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
-          name: Remove 
-          command: |
-            rm bootstrap.php && rm phpunit.xml
-      - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && ./vendor/bin/phpunit --configuration=$PLUGIN_PATH/phpunit.xml
 workflows:
