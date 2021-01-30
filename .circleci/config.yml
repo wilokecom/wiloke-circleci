@@ -1,18 +1,6 @@
 version: 2.1
-jobs:
-  build:
-    environment:
-      WORKSPACE_ROOT: tmp/
-      DB_NAME: wordpress
-      DB_USER: wordpress
-      DB_PASSWORD: 123456
-      DB_HOST: 127.0.0.1
-      WORKING_DIR: ~/var/www/html
-      WP_ADMIN: /var/www/html
-      WP_PASSWORD: /var/www/html
-      WP_EMAIL: contact.wiloke@gmail.com
-      WP_URL: http://localhost
-      PLUGIN_NAME: wiloke-circleci
+references:
+  docker_container: &docker_container
     docker:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
@@ -27,7 +15,26 @@ jobs:
           username: $DOCKER_LOGIN
           password: $DOCKER_PASSWORD  # context / project UI env-var reference
       - image: circleci/buildpack-deps:curl
+  working_directory: &working_directory
     working_directory: ~/wiloke-circleci
+  environment: &environment
+    environment:
+      WORKSPACE_ROOT: tmp/
+      DB_NAME: wordpress
+      DB_USER: wordpress
+      DB_PASSWORD: 123456
+      DB_HOST: 127.0.0.1
+      WORKING_DIR: ~/var/www/html
+      WP_ADMIN: /var/www/html
+      WP_PASSWORD: /var/www/html
+      WP_EMAIL: contact.wiloke@gmail.com
+      WP_URL: http://localhost
+      PLUGIN_NAME: wiloke-circleci
+jobs:
+  build:
+    &environment
+    &docker_container
+    &working_directory
     steps:
       - checkout
       - run:
@@ -47,9 +54,6 @@ jobs:
       - run:
           name: Generate autoload
           command: composer dump-autoload
-      - persist_to_workspace:
-          root: .
-          paths: vendor
       - run:
           name: Checking folder
           command: ls -la
@@ -75,25 +79,17 @@ jobs:
       - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
-  test:
-    docker:
-      - image: circleci/mysql:5.7
-    working_directory: ~/wiloke-circleci
+      - persist_to_workspace:
+          root: .
+          paths: .
+  test_phpunit:
+    &docker_container
+    &working_directory
     steps:
-      - run:
-          name: Before attaching workspace
-          command: ls -la
-      - run:
-          name: Creating test folder
-          command: mkdir test
-      - run:
-          name: Created test
-          command: ls -la test
       - attach_workspace:
-          at: ./test
-      - run:
-          name: After attaching workspace
-          command: ls -la test
+          at: .
+      - checkout:
+        path: wp-content/plugins
 workflows:
   version: 2
   build_test:
