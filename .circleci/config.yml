@@ -36,6 +36,7 @@ jobs:
     <<: *docker_container
     <<: *working_directory
     steps:
+      - checkout
       - run:
           name: Checking folder
           command: ls -la
