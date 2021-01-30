@@ -144,7 +144,7 @@ jobs:
       - run:
           name: Cat PHPUnit
           command: |
-            ls -la $PLUGIN_PATH/tests/User/Controllers
+            ls -la $PLUGIN_PATH/tests/
       - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && vendor/bin/phpunit --bootstrap=$CIRCLE_WORKING_DIRECTORY/$PLUGIN_PATH/tests/boostrap.php tests/
