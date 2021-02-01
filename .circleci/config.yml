@@ -68,9 +68,6 @@ jobs:
           name: Install MySQL CLI; #https://circleci.com/docs/2.0/postgres-config/
           command: sudo apt-get install default-mysql-client
       - run:
-          name: Create Database
-          command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
-      - run:
           name: Install MySQL client
           command: |
             sudo apt-get update && \
@@ -83,6 +80,9 @@ jobs:
       - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
+      - run:
+          name: Create Database
+          command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
       - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
@@ -124,8 +124,21 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Install MySQL CLI; #https://circleci.com/docs/2.0/postgres-config/
+          command: sudo apt-get install default-mysql-client
+      - run:
+          name: Install MySQL client
+          command: |
+            sudo apt-get update && \
+            sudo apt-get -y install \
+              default-mysql-client \
+              libjpeg-dev \
+              libpng-dev \
+              libzip-dev \
+              libcurl4-gnutls-dev
+      - run:
           name: Install MySQL PHP extension
-          command: sudo docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+          command: sudo docker-php-ext-install mysqli
       - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
