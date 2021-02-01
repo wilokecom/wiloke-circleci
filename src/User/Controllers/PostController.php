@@ -17,8 +17,39 @@ class PostController
 			[
 				'methods'  => 'GET',
 				'callback' => [$this, 'getPosts']
+			],
+			[
+				'methods'  => 'POST',
+				'callback' => [$this, 'createPost']
 			]
 		]);
+	}
+
+	/**
+	 * @param \WP_REST_Request $oRequest
+	 * @return array
+	 */
+	public function createPost(\WP_REST_Request $oRequest): array
+	{
+		$aParam = array_merge($oRequest->get_params(), [
+			'post_type'   => 'post',
+			'post_status' => 'publish',
+			'post_author' => get_current_user_id()
+		]);
+
+		$id = wp_insert_post($aParam);
+
+		if (is_wp_error($id)) {
+			return [
+				'status' => 'error',
+				'msg'    => $id->get_error_message()
+			];
+		}
+
+		return [
+			'status' => 'success',
+			'id'     => $id
+		];
 	}
 
 	public function getPosts(): array
