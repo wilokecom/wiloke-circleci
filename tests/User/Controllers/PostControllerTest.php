@@ -11,6 +11,8 @@ class PostControllerTest extends CommonController
 	{
 		$phpUnitTest = dirname(dirname(dirname(plugin_dir_path(__FILE__)))) . '/phpunit.xml';
 		$content = file_get_contents($phpUnitTest);
+		var_export($content);
+		var_export(class_exists('WP_Application_Passwords'));
 
 		if (strpos($content, 'ADMIN_AUTH_PASS_VALUE') !== false) {
 			$aResponse = \WP_Application_Passwords::create_new_application_password($this->getAdminId(), [
@@ -24,11 +26,11 @@ class PostControllerTest extends CommonController
 
 	public function testPosts()
 	{
-		if (method_exists($this, 'createApplicationPassword')) {
-			$this->createApplicationPassword();
-		} else {
+//		if (method_exists($this, 'createApplicationPassword')) {
+//			$this->createApplicationPassword();
+//		} else {
 			$this->createApplicationPassword1();
-		}
+//		}
 
 		$aResponse = $this->setUserLogin('admin')->restPOST('posts', [
 			'post_title' => 'Hello World'
