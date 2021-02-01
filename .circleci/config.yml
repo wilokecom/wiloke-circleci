@@ -46,11 +46,11 @@ jobs:
           name: Checking folder
           command: ls -la
       - checkout
-#      - setup_remote_docker:
-#          docker_layer_caching: true
-#      - run:
-#          name: Docker Build
-#          command: docker build .
+      #      - setup_remote_docker:
+      #          docker_layer_caching: true
+      #      - run:
+      #          name: Docker Build
+      #          command: docker build .
       - run:
           name: Checking folder
           command: ls -la
@@ -97,11 +97,11 @@ jobs:
       - run:
           name: Update Composer
           command: sudo composer self-update
-#      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
-#          keys:
-#            - composer-v1-{{ checksum "composer.lock" }}
-#            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
-#            - composer-v1-
+      #      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+      #          keys:
+      #            - composer-v1-{{ checksum "composer.lock" }}
+      #            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+      #            - composer-v1-
       - run:
           name: Installing Composer
           command: cd $PLUGIN_PATH && composer install -n --prefer-dist
@@ -115,8 +115,8 @@ jobs:
           root: .
           paths: .
   test_phpunit:
-#    machine:
-#      docker_layer_caching: true
+    #    machine:
+    #      docker_layer_caching: true
     <<: *docker_container
     <<: *working_directory
     <<: *environment
@@ -133,7 +133,7 @@ jobs:
       - run:
           name: Test folder
           command: |
-            ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
+            ls -la && ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
       - run:
           name: Cat PHPUnit
           command: |
