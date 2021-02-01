@@ -1,7 +1,6 @@
 version: 2.1
 references:
   docker_container: &docker_container
-    docker:
       - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
         environment:
@@ -39,7 +38,9 @@ references:
 jobs:
   build:
     <<: *environment
-    <<: *docker_container
+    docker:
+      - *docker_container
+#    <<: *docker_container
     <<: *working_directory
     steps:
       - run:
@@ -67,16 +68,16 @@ jobs:
       - run:
           name: Install MySQL CLI; #https://circleci.com/docs/2.0/postgres-config/
           command: sudo apt-get install default-mysql-client
-      - run:
-          name: Install MySQL client
-          command: |
-            sudo apt-get update && \
-            sudo apt-get -y install \
-              default-mysql-client \
-              libjpeg-dev \
-              libpng-dev \
-              libzip-dev \
-              libcurl4-gnutls-dev
+#      - run:
+#          name: Install MySQL client
+#          command: |
+#            sudo apt-get update && \
+#            sudo apt-get -y install \
+#              default-mysql-client \
+#              libjpeg-dev \
+#              libpng-dev \
+#              libzip-dev \
+#              libcurl4-gnutls-dev
       - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
@@ -117,7 +118,9 @@ jobs:
   test_phpunit:
     #    machine:
     #      docker_layer_caching: true
-    <<: *docker_container
+    docker:
+      - image: circleci/php:7.4-node-browsers
+      - *docker_container
     <<: *working_directory
     <<: *environment
     steps:

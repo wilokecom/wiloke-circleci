@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PostControllerTest extends CommonController
 {
-	protected function createApplicationPassword()
+	protected function createApplicationPassword1()
 	{
 		$phpUnitTest = dirname(dirname(dirname(plugin_dir_path(__FILE__)))) . '/phpunit.xml';
 		$content = file_get_contents($phpUnitTest);
@@ -24,11 +24,16 @@ class PostControllerTest extends CommonController
 
 	public function testPosts()
 	{
-		$this->createApplicationPassword();
+		if (method_exists($this, 'createApplicationPassword')) {
+			$this->createApplicationPassword();
+		} else {
+			$this->createApplicationPassword1();
+		}
+
 		$aResponse = $this->setUserLogin('admin')->restPOST('posts', [
 			'post_title' => 'Hello World'
 		]);
-var_export($aResponse);die;
+
 		$this->assertEquals($aResponse['status'], 'success');
 		$postId = $aResponse['id'];
 
