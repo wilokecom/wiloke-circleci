@@ -160,7 +160,7 @@ jobs:
       - run:
           name: Move PHP Unit
           command: |
-            mv $PLUGIN_PATH/tests/phpunit.xml $PLUGIN_PATH/phpunit.xml
+            mv $PLUGIN_PATH/unit.xml $PLUGIN_PATH/phpunit.xml
       - run:
           name: Adding 777 to PHPUNIT
           command: |
