@@ -140,6 +140,9 @@ jobs:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
       - run:
+          name: Install WordPress
+          command: .circleci/wp-installation.sh
+      - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
           background: true
