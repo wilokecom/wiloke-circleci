@@ -9,6 +9,7 @@ class PostControllerTest extends CommonController
 {
 	public function testPosts()
 	{
+		$this->createApplicationPassword();
 		$aResponse = $this->setUserLogin('admin')->restPOST('posts', [
 			'post_title' => 'Hello World'
 		]);
