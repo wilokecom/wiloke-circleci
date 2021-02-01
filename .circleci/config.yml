@@ -204,6 +204,9 @@ jobs:
           name: Activating plugin
           command: .circleci/wp-plugin-activation.sh
       - run:
+          name: Activating plugin
+          command: mv $PLUGIN_PATH/HTTP.php $PLUGIN_PATH/tests/HTTP.php
+      - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && ./vendor/bin/phpunit
 workflows:

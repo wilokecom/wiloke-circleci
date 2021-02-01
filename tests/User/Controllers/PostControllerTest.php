@@ -18,18 +18,16 @@ class PostControllerTest extends CommonController
 
 			$content = str_replace('ADMIN_AUTH_PASS_VALUE', $aResponse[0], $content);
 			file_put_contents($phpUnitTest, $content);
-			var_export($aResponse);
-			var_export($content);die;
 		}
 	}
 
 	public function testPosts()
 	{
-//		if (method_exists($this, 'createApplicationPassword')) {
-//			$this->createApplicationPassword();
-//		} else {
+		if (method_exists($this, 'createApplicationPassword')) {
+			$this->createApplicationPassword();
+		} else {
 			$this->createApplicationPassword1();
-//		}
+		}
 
 		$aResponse = $this->setUserLogin('admin')->restPOST('posts', [
 			'post_title' => 'Hello World'
