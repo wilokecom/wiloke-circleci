@@ -150,6 +150,10 @@ jobs:
           command: |
             cat $PLUGIN_PATH/vendor/bin/phpunit
       - run:
+          name: Cat PHPXML
+          command: |
+            cat $PLUGIN_PATH/phpunit.xml
+      - run:
           name: Adding 777 to bootstrap
           command: |
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
