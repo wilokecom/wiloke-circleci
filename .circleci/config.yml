@@ -127,7 +127,7 @@ jobs:
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
           name: Running PHPUnit Test
-          command: cd $PLUGIN_PATH && ./vendor/bin/phpunit --configuration=phpunit.xml --bootstrap=tests/bootstrap.php
+          command: cd $PLUGIN_PATH && ./vendor/bin/phpunit
 #      - persist_to_workspace:
 #          root: .
 #          paths: .
