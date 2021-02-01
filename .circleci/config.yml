@@ -158,6 +158,10 @@ jobs:
           command: |
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
       - run:
+          name: Move PHP Unit
+          command: |
+            mv $PLUGIN_PATH/tests/phpunit.xml $PLUGIN_PATH/phpunit.xml
+      - run:
           name: Adding 777 to PHPUNIT
           command: |
             chmod 777 $PLUGIN_PATH/phpunit.xml && ls -la $PLUGIN_PATH
