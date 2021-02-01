@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
         colors="true"
+        bootstrap="./tests/bootstrap.php"
         convertWarningsToExceptions="true"
         convertNoticesToExceptions="true"
         convertErrorsToExceptions="true"
 >
     <testsuites>
         <testsuite name="Wiloke Test">
-            <directory suffix="Test.php">tests/</directory>
+            <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
