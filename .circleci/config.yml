@@ -110,6 +110,10 @@ jobs:
       - checkout:
           path: $PLUGIN_PATH
       - run:
+          name: Test folder
+          command: |
+            ls -la $PLUGIN_PATH && ls -la
+      - run:
           name: Update Composer
           command: sudo composer self-update
             #      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
@@ -133,10 +137,6 @@ jobs:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
           background: true
-      - run:
-          name: Test folder
-          command: |
-            ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
       - run:
           name: Cat PHPUnit
           command: |
