@@ -1,19 +1,19 @@
 version: 2.1
 references:
   docker_container: &docker_container
-      - image: circleci/php:7.4-node-browsers
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_DATABASE: wordpress
-          MYSQL_USER: wordpress
-          MYSQL_PASSWORD: 123456
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_TCP_PORT: 3306
-          MYSQL_UNIX_PORT: 3306
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD  # context / project UI env-var reference
-      - image: circleci/buildpack-deps:curl
+    - image: circleci/php:7.4-node-browsers
+    - image: circleci/mysql:5.7
+      environment:
+        MYSQL_DATABASE: wordpress
+        MYSQL_USER: wordpress
+        MYSQL_PASSWORD: 123456
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_TCP_PORT: 3306
+        MYSQL_UNIX_PORT: 3306
+      auth:
+        username: $DOCKER_LOGIN
+        password: $DOCKER_PASSWORD  # context / project UI env-var reference
+    - image: circleci/buildpack-deps:curl
   working_directory: &working_directory
     working_directory: ~/wiloke-circleci
   environment: &environment
