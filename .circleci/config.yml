@@ -89,8 +89,6 @@ jobs:
       - run:
           name: WordPress Dir
           command: ls -la $PLUGINS_FOLDER_PATH
-      - checkout:
-          path: $PLUGIN_PATH
       - run:
           name: WordPress Dir
           command: ls -la $PLUGINS_FOLDER_PATH
@@ -109,6 +107,8 @@ jobs:
       - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+      - checkout:
+          path: $PLUGIN_PATH
       - run:
           name: Update Composer
           command: sudo composer self-update
