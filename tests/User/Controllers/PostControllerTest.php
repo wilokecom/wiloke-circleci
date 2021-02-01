@@ -21,14 +21,14 @@ class PostControllerTest extends CommonController
 			file_put_contents($phpUnitTest, $content);
 		}
 	}
-	
+
 	public function testPosts()
 	{
 		$this->createApplicationPassword();
 		$aResponse = $this->setUserLogin('admin')->restPOST('posts', [
 			'post_title' => 'Hello World'
 		]);
-
+var_export($aResponse);die;
 		$this->assertEquals($aResponse['status'], 'success');
 		$postId = $aResponse['id'];
 
