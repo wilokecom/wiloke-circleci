@@ -1,6 +1,7 @@
 version: 2.1
 references:
   docker_container: &docker_container
+    - image: circleci/php7.4-browsers
     - image: circleci/mysql:5.7
       environment:
         MYSQL_DATABASE: wordpress
@@ -111,7 +112,7 @@ jobs:
   test_phpunit:
     docker:
       - <<: *docker_container
-      - image: circleci/php:7.4.14-node-browsers-legacy
+#      - image: circleci/php:7.4.14-node-browsers-legacy
 #      - *docker_container
 #      <<: *docker_container
     <<: *working_directory
