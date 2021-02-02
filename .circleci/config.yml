@@ -147,29 +147,6 @@ jobs:
           at: .
       - run: *installing_mysql
       - run: *waiting_for_mysql
-#      - run:
-#          name: Install MySQL client
-#          command: |
-#            sudo apt-get update && \
-#            sudo apt-get -y install \
-#              default-mysql-client \
-#              libjpeg-dev \
-#              libpng-dev \
-#              libzip-dev \
-#              libcurl4-gnutls-dev
-#      - run:
-#          name: Install MySQL PHP extension
-#          command: sudo docker-php-ext-install mysqli
-#      - run:
-#          name: Installing Mysql
-#          command: |
-#            for i in `seq 1 10`;
-#            do
-#              nc -z 127.0.0.1 3306 && echo Success && exit 0
-#              echo -n .
-#              sleep 1
-#            done
-#            echo Failed waiting for MySQL && exit 1
       - run:
           name: Create Database
           command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
@@ -180,30 +157,30 @@ jobs:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
           background: true
-      - run:
-          name: Test folder
-          command: |
-            ls -la && ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
-      - run:
-          name: Cat PHPUnit
-          command: |
-            cat $PLUGIN_PATH/phpunit.xml
-      - run:
-          name: Bin
-          command: |
-            ls -la $PLUGIN_PATH/vendor/bin
-      - run:
-          name: Cat phpunit
-          command: |
-            cat $PLUGIN_PATH/vendor/bin/phpunit
+#      - run:
+#          name: Test folder
+#          command: |
+#            ls -la && ls -la $PLUGIN_PATH && ls -la $PLUGIN_PATH/tests && ls -la $PLUGIN_PATH/vendor
+#      - run:
+#          name: Cat PHPUnit
+#          command: |
+#            cat $PLUGIN_PATH/phpunit.xml
+#      - run:
+#          name: Bin
+#          command: |
+#            ls -la $PLUGIN_PATH/vendor/bin
+#      - run:
+#          name: Cat phpunit
+#          command: |
+#            cat $PLUGIN_PATH/vendor/bin/phpunit
       - run:
           name: Adding 777 to bootstrap
           command: |
             chmod 777 $PLUGIN_PATH/tests/bootstrap.php
-      - run:
-          name: Cat PHPXML
-          command: |
-            cat $PLUGIN_PATH/phpunit.xml
+#      - run:
+#          name: Cat PHPXML
+#          command: |
+#            cat $PLUGIN_PATH/phpunit.xml
       - run:
           name: Adding 777 to PHPUNIT
           command: |
