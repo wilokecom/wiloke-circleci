@@ -1,19 +1,20 @@
 version: 2.1
 references:
-#  docker_container: &docker_container
-#    - image: circleci/php:7.4-node-browsers
-#    - image: circleci/mysql:5.7
-#      environment:
-#        MYSQL_DATABASE: wordpress
-#        MYSQL_USER: wordpress
-#        MYSQL_PASSWORD: 123456
-#        MYSQL_ROOT_PASSWORD: root
-#        MYSQL_TCP_PORT: 3306
-#        MYSQL_UNIX_PORT: 3306
-#      auth:
-#        username: $DOCKER_LOGIN
-#        password: $DOCKER_PASSWORD  # context / project UI env-var reference
-#    - image: circleci/buildpack-deps:curl
+  docker_container: &docker_container
+    docker:
+#      - image: circleci/php:7.4-node-browsers
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_DATABASE: wordpress
+          MYSQL_USER: wordpress
+          MYSQL_PASSWORD: 123456
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_TCP_PORT: 3306
+          MYSQL_UNIX_PORT: 3306
+        auth:
+          username: $DOCKER_LOGIN
+          password: $DOCKER_PASSWORD  # context / project UI env-var reference
+      - image: circleci/buildpack-deps:curl
   working_directory: &working_directory
     working_directory: ~/wiloke-circleci
   environment: &environment
@@ -38,32 +39,13 @@ references:
 jobs:
   build:
     <<: *environment
-    docker:
-      - image: circleci/php:7.4-node-browsers
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_DATABASE: wordpress
-          MYSQL_USER: wordpress
-          MYSQL_PASSWORD: 123456
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_TCP_PORT: 3306
-          MYSQL_UNIX_PORT: 3306
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD  # context / project UI env-var reference
-      - image: circleci/buildpack-deps:curl
-#    <<: *docker_container
+    <<: *docker_container
     <<: *working_directory
     steps:
       - run:
           name: Checking folder
           command: ls -la
       - checkout
-      #      - setup_remote_docker:
-      #          docker_layer_caching: true
-      #      - run:
-      #          name: Docker Build
-      #          command: docker build .
       - run:
           name: Checking folder
           command: ls -la
@@ -110,11 +92,11 @@ jobs:
       - run:
           name: Update Composer
           command: sudo composer self-update
-      #      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
-      #          keys:
-      #            - composer-v1-{{ checksum "composer.lock" }}
-      #            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
-      #            - composer-v1-
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - composer-v1-
       - run:
           name: Installing Composer
           command: cd $PLUGIN_PATH && composer install -n --prefer-dist
@@ -128,22 +110,8 @@ jobs:
           root: .
           paths: .
   test_phpunit:
-    #    machine:
-    #      docker_layer_caching: true
-    docker:
-      - image: circleci/php:7.4-node-browsers
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_DATABASE: wordpress
-          MYSQL_USER: wordpress
-          MYSQL_PASSWORD: 123456
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_TCP_PORT: 3306
-          MYSQL_UNIX_PORT: 3306
-        auth:
-          username: $DOCKER_LOGIN
-          password: $DOCKER_PASSWORD  # context / project UI env-var reference
-      - image: circleci/buildpack-deps:curl
+    <<: *docker_container
+        - image: circleci/php:7.4-node-browsers
     <<: *working_directory
     <<: *environment
     steps:
@@ -203,9 +171,6 @@ jobs:
       - run:
           name: Activating plugin
           command: .circleci/wp-plugin-activation.sh
-#      - run:
-#          name: Activating plugin
-#          command: mv $PLUGIN_PATH/HTTP.php $PLUGIN_PATH/tests/HTTP.php
       - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && ./vendor/bin/phpunit
