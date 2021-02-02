@@ -49,16 +49,16 @@ jobs:
       - run:
           name: Checking folder
           command: ls -la
-      - run:
-          name: Installing Mysql
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z 127.0.0.1 3306 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MySQL && exit 1
+#      - run:
+#          name: Installing Mysql
+#          command: |
+#            for i in `seq 1 10`;
+#            do
+#              nc -z 127.0.0.1 3306 && echo Success && exit 0
+#              echo -n .
+#              sleep 1
+#            done
+#            echo Failed waiting for MySQL && exit 1
 #      - run:
 #          name: Install MySQL client
 #          command: |
@@ -130,6 +130,16 @@ jobs:
       - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
+      - run:
+          name: Installing Mysql
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
       - run:
           name: Create Database
           command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
