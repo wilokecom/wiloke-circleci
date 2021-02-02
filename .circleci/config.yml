@@ -44,7 +44,8 @@ jobs:
   build:
     <<: *environment
     docker:
-      - image: circleci/php:7.4.14-node-browsers-legacy
+#      - image: circleci/php:7.4.14-node-browsers-legacy
+      - image: circleci/php:7.4.14-fpm
       - <<: *docker_container
     #    <<: *docker_container
     <<: *working_directory
