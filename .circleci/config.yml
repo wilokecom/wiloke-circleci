@@ -13,12 +13,33 @@ references:
         username: $DOCKER_LOGIN
         password: $DOCKER_PASSWORD  # context / project UI env-var reference
     - image: circleci/buildpack-deps:curl
-  curl_installation: &curl
+  curl_installation: &installing_curl
     name: CURL
     command: |
       sudo apt-get update && \
       sudo apt-get -y install \
            libcurl4-gnutls-dev
+  mysql_client_installation: &installing_mysql
+    name: Install MySQL client
+    command: |
+      sudo apt-get update && \
+      sudo apt-get -y install \
+        default-mysql-client \
+        libjpeg-dev \
+        libpng-dev \
+        libzip-dev \
+        libcurl4-gnutls-dev && \
+      sudo docker-php-ext-install mysqli
+  wating_for_mysql_running: &waiting_for_mysql
+    name: Installing Mysql
+    command: |
+      for i in `seq 1 10`;
+      do
+        nc -z 127.0.0.1 3306 && echo Success && exit 0
+        echo -n .
+        sleep 1
+      done
+      echo Failed waiting for MySQL && exit 1
   working_directory: &working_directory
     working_directory: ~/wiloke-circleci
   environment: &environment
@@ -80,10 +101,10 @@ jobs:
 #      - run:
 #          name: Install MySQL PHP extension
 #          command: sudo docker-php-ext-install mysqli
-      - run: *curl
+      - run: *installing_curl
       - run:
           name: Downloading & Installing WordPress
-          command: .circleci/install-wp-cli.sh
+          command: .circleci/install-wp.sh
       - run:
           name: WordPress Dir
           command: ls -la $PLUGINS_FOLDER_PATH
@@ -108,7 +129,7 @@ jobs:
           command: cd $PLUGIN_PATH && composer dump-autoload
       - run:
           name: Setting up PHP UNIT
-          command: .circleci/wp-setup-phpunit.sh
+          command: .circleci/setup-phpunit.sh
       - persist_to_workspace:
           root: .
           paths: .
@@ -124,38 +145,37 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install MySQL CLI #https://circleci.com/docs/2.0/postgres-config/
-          command: sudo apt-get install default-mysql-client
-      - run:
-          name: Install MySQL client
-          command: |
-            sudo apt-get update && \
-            sudo apt-get -y install \
-              default-mysql-client \
-              libjpeg-dev \
-              libpng-dev \
-              libzip-dev \
-              libcurl4-gnutls-dev
-      - run:
-          name: Install MySQL PHP extension
-          command: sudo docker-php-ext-install mysqli
-      - run:
-          name: Installing Mysql
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z 127.0.0.1 3306 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MySQL && exit 1
+      - run: *installing_mysql
+      - run: *waiting_for_mysql
+#      - run:
+#          name: Install MySQL client
+#          command: |
+#            sudo apt-get update && \
+#            sudo apt-get -y install \
+#              default-mysql-client \
+#              libjpeg-dev \
+#              libpng-dev \
+#              libzip-dev \
+#              libcurl4-gnutls-dev
+#      - run:
+#          name: Install MySQL PHP extension
+#          command: sudo docker-php-ext-install mysqli
+#      - run:
+#          name: Installing Mysql
+#          command: |
+#            for i in `seq 1 10`;
+#            do
+#              nc -z 127.0.0.1 3306 && echo Success && exit 0
+#              echo -n .
+#              sleep 1
+#            done
+#            echo Failed waiting for MySQL && exit 1
       - run:
           name: Create Database
           command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
       - run:
           name: Install WordPress
-          command: .circleci/wp-installation.sh
+          command: .circleci/running-wp.sh
       - run:
           name: Start PHP server
           command: sudo php -S $PHP_ADDRESS -t .
@@ -190,7 +210,7 @@ jobs:
             chmod 777 $PLUGIN_PATH/phpunit.xml && ls -la $PLUGIN_PATH
       - run:
           name: Activating plugin
-          command: .circleci/wp-plugin-activation.sh
+          command: .circleci/activate-plugin.sh
       - run:
           name: Running PHPUnit Test
           command: cd $PLUGIN_PATH && ./vendor/bin/phpunit
