@@ -13,12 +13,12 @@ references:
         username: $DOCKER_LOGIN
         password: $DOCKER_PASSWORD  # context / project UI env-var reference
     - image: circleci/buildpack-deps:curl
-    curl_installation: &curl
-      name: CURL
-      command: |
-        sudo apt-get update && \
-        sudo apt-get -y install \
-             libcurl4-gnutls-dev
+  curl_installation: &curl
+    name: CURL
+    command: |
+      sudo apt-get update && \
+      sudo apt-get -y install \
+           libcurl4-gnutls-dev
   working_directory: &working_directory
     working_directory: ~/wiloke-circleci
   environment: &environment
