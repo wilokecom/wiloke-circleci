@@ -45,7 +45,7 @@ jobs:
     <<: *environment
     docker:
       - <<: *docker_container
-      - image: circleci/circleci/php:7.4.13-apache-buster
+      - image: circleci/php:7.4.13-apache-buster
     #    <<: *docker_container
     <<: *working_directory
     steps:
