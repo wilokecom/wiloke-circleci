@@ -16,7 +16,6 @@ references:
   curl_installation: &curl
     name: "Installing CURL"
     command: |
-      apt-get install -y sudo && \
       sudo apt-get update && \
       sudo apt-get -y install \
            libcurl4-gnutls-dev
@@ -46,7 +45,7 @@ jobs:
     <<: *environment
     docker:
       - <<: *docker_container
-      - image: circleci/php:7.4.13
+      - image: circleci/circleci/php:7.4.13-apache-buster
     #    <<: *docker_container
     <<: *working_directory
     steps:
