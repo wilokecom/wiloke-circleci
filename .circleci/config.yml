@@ -14,7 +14,7 @@ references:
         password: $DOCKER_PASSWORD  # context / project UI env-var reference
     - image: circleci/buildpack-deps:curl
     curl_installation: &curl
-      name: "Installing CURL"
+      name: Installing CURL
       command: |
         sudo apt-get update && \
         sudo apt-get -y install \
