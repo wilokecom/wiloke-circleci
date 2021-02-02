@@ -67,19 +67,19 @@ jobs:
               sleep 1
             done
             echo Failed waiting for MySQL && exit 1
-      - run:
-          name: Install MySQL client
-          command: |
-            sudo apt-get update && \
-            sudo apt-get -y install \
-              default-mysql-client \
-              libjpeg-dev \
-              libpng-dev \
-              libzip-dev \
-              libcurl4-gnutls-dev
-      - run:
-          name: Install MySQL PHP extension
-          command: sudo docker-php-ext-install mysqli
+#      - run:
+#          name: Install MySQL client
+#          command: |
+#            sudo apt-get update && \
+#            sudo apt-get -y install \
+#              default-mysql-client \
+#              libjpeg-dev \
+#              libpng-dev \
+#              libzip-dev \
+#              libcurl4-gnutls-dev
+#      - run:
+#          name: Install MySQL PHP extension
+#          command: sudo docker-php-ext-install mysqli
       - run: *curl
       - run:
           name: Downloading & Installing WordPress
@@ -114,8 +114,8 @@ jobs:
           paths: .
   test_phpunit:
     docker:
-      - <<: *docker_container
       - image: circleci/php:7.4.14-node-browsers-legacy
+      - <<: *docker_container
     #      - *docker_container
     #      <<: *docker_container
     <<: *working_directory
