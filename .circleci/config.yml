@@ -57,16 +57,16 @@ jobs:
       - run:
           name: Checking folder
           command: ls -la
-      - run:
-          name: Installing Mysql
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z 127.0.0.1 3306 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MySQL && exit 1
+#      - run:
+#          name: Installing Mysql
+#          command: |
+#            for i in `seq 1 10`;
+#            do
+#              nc -z 127.0.0.1 3306 && echo Success && exit 0
+#              echo -n .
+#              sleep 1
+#            done
+#            echo Failed waiting for MySQL && exit 1
 #      - run:
 #          name: Install MySQL client
 #          command: |
@@ -124,7 +124,7 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install MySQL CLI; #https://circleci.com/docs/2.0/postgres-config/
+          name: Install MySQL CLI #https://circleci.com/docs/2.0/postgres-config/
           command: sudo apt-get install default-mysql-client
       - run:
           name: Install MySQL client
