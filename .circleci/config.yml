@@ -73,9 +73,6 @@ jobs:
 #          name: Install MySQL PHP extension
 #          command: sudo docker-php-ext-install mysqli
       - run:
-          name: Create Database
-          command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
-      - run:
           name: Downloading & Installing WordPress
           command: .circleci/install-wp-cli.sh
       - run:
@@ -133,6 +130,9 @@ jobs:
       - run:
           name: Install MySQL PHP extension
           command: sudo docker-php-ext-install mysqli
+      - run:
+          name: Create Database
+          command: mysql -h $DB_HOST -u root -proot -e "create database if not exists wordpress;"
       - run:
           name: Install WordPress
           command: .circleci/wp-installation.sh
